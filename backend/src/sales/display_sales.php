@@ -1,4 +1,21 @@
 <?php
+// Allow any origin to access this PHP script
+header("Access-Control-Allow-Origin: *");
+
+// Allow common HTTP methods (GET, POST, PUT, DELETE, etc.)
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+
+// Allow specific headers in requests
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// Allow credentials (e.g., cookies) to be included in requests
+header("Access-Control-Allow-Credentials: true");
+
+// Set the maximum age (in seconds) for which this CORS policy is valid
+header("Access-Control-Max-Age: 3600");
+
+// Specify the content type for the response
+header("Content-Type: application/json");
 // Create a connection
 $conn = mysqli_connect("localhost","root","","API_DATA");
 

@@ -40,11 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Update the inventory item in the database
-    $sql = "UPDATE inventory
-            SET item_name = ?, category = ?, quantity = ?, unit_of_measure = ?, purchase_price = ?, expiration_date = ?
-            WHERE id = ?";
+    $sql = "INSERT INTO inventory (item_name, category, quantity, unit_of_measure, purchase_price, expiration_date)
+    VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssdssdi", $item_name, $category, $quantity, $unit_of_measure, $purchase_price, $expiration_date, $id);
+    $stmt->bind_param("ssdssd", $item_name, $category, $quantity, $unit_of_measure, $purchase_price, $expiration_date);
+    //s stands for string d stands for double and i stands for integer
 
     if ($stmt->execute()) {
         // Successfully updated

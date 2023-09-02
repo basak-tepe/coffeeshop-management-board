@@ -1,4 +1,5 @@
 <?php
+// Create a connection
 $conn = mysqli_connect("localhost","root","","API_DATA");
 
 // Check connection
@@ -7,7 +8,7 @@ if ($conn->connect_error) {
 }
 
 // Query to retrieve menu items
-$sql = "SELECT id, name, description, price FROM menu_items";
+$sql = "SELECT id, item_name, category, quantity, unit_of_measure, purchase_price, expiration_date FROM menu_items";
 $result = $conn->query($sql);
 
 // Check if there are any results

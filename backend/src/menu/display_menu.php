@@ -1,4 +1,5 @@
 <?php
+// Create a connection
 $conn = mysqli_connect("localhost","root","","API_DATA");
 
 // Check connection

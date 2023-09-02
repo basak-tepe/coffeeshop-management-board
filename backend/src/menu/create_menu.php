@@ -34,9 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Update the employee information in the database
-    $sql = "UPDATE menu_items 
-            SET name = ?, description = ?, price = ?
-            WHERE id = ?";
+    $sql = "INSERT INTO  menu_items (name, description, price, id)
+    VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssdi", $name, $description, $price, $id);
 

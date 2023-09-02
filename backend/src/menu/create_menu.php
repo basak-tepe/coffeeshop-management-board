@@ -12,14 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if the JSON data contains the expected keys
     if (
-        isset($data->id) &&
         isset($data->name) &&
         isset($data->description) &&
         isset($data->price)
     )
 
             // Assign data to variables
-            $id = $data->id;
             $name = $data->name;
             $description = $data->description;
             $price = $data->price;
@@ -34,17 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Update the employee information in the database
-    $sql = "INSERT INTO  menu_items (name, description, price, id)
-    VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO  menu_items (name, description, price)
+    VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssdi", $name, $description, $price, $id);
+    $stmt->bind_param("ssd", $name, $description, $price);
 
     if ($stmt->execute()) {
         // Successfully updated
-        echo "Employee information updated successfully.";
+        echo "Menu information updated successfully.";
     } else {
         // Error occurred
-        echo "Error updating employee information: " . $stmt->error;
+        echo "Error updating menu information: " . $stmt->error;
     }
 
     // Close the database connection

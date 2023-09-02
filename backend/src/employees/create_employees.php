@@ -42,11 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Update the employee information in the database
-    $sql = "UPDATE employees 
-            SET first_name = ?, last_name = ?, email = ?, phone_number = ?, hire_date = ?, POSITION = ?, hourly_wage = ?
-            WHERE id = ?";
+    $sql = "INSERT INTO employees (first_name, last_name, email, phone_numbeR, hire_date, POSITION, hourly_wage)
+    VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssdi", $first_name, $last_name, $email, $phone_number, $hire_date, $POSITION, $hourly_wage, $id);
+    $stmt->bind_param("ssssssd", $first_name, $last_name, $email, $phone_number, $hire_date, $POSITION, $hourly_wage);
 
     if ($stmt->execute()) {
         // Successfully updated

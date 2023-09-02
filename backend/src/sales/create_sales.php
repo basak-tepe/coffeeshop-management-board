@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if the JSON data contains the expected keys
     if (
-        isset($data->id) &&
         isset($data->sale_date) &&
         isset($data->item_name) &&
         isset($data->quantity) &&
@@ -21,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         isset($data->payment_method)
     ) {
         // Assign data to variables
-        $id = $data->id;
         $sale_date = $data->sale_date;
         $item_name = $data->item_name;
         $quantity = $data->quantity;
@@ -37,19 +35,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        // Update the sales information in the database
-        $sql = "UPDATE sales 
-                SET sale_date = ?, item_name = ?, quantity = ?, unit_price = ?, total_price = ?, payment_method = ?
-                WHERE id = ?";
+        // Insert the new sale record into the database
+        $sql = "INSERT INTO sales (sale_date, item_name, quantity, unit_price, total_price, payment_method)
+                VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssdddsi", $sale_date, $item_name, $quantity, $unit_price, $total_price, $payment_method, $id);
+        $stmt->bind_param("ssddds", $sale_date, $item_name, $quantity, $unit_price, $total_price, $payment_method);
 
         if ($stmt->execute()) {
-            // Successfully updated
-            echo "Sales information updated successfully.";
+            // Successfully created
+            echo "Sale created successfully.";
         } else {
             // Error occurred
-            echo "Error updating sales information: " . $stmt->error;
+            echo "Error creating sale: " . $stmt->error;
         }
 
         // Close the database connection

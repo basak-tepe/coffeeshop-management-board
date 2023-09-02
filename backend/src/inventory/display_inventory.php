@@ -8,7 +8,7 @@ if ($conn->connect_error) {
 }
 
 // Query to retrieve menu items
-$sql = "SELECT id, item_name, category, quantity, unit_of_measure, purchase_price, expiration_date FROM menu_items";
+$sql = "SELECT id, item_name, category, quantity, unit_of_measure, purchase_price, expiration_date FROM inventory";
 $result = $conn->query($sql);
 
 // Check if there are any results

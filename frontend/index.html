@@ -1,24 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--link rel="stylesheet" href="css/styles.css"-->
-    <!--script src="./assets/js/script.js" defer></script--!>
-    <title>Menu Display</title>
-    
-</head>
-<body>
-    <!-- Navigation links to different pages -->
-    <nav>
-        <ul>
-            <li><a href="./pages/menu.html">Menu</a></li>
-            <li><a href="./pages/employees.html">Employees</a></li>
-            <li><a href="./pages/inventory.html">Inventory</a></li>
-            <li><a href="./pages/sales.html">Sales</a></li>
-        </ul>
-    </nav>
+    <script src="./assets/js/script.js" defer></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <!-- Add jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Add Semantic UI CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+    <title>Coffee Grounds Brewing Co.</title>
 
-    <!-- Main content of your main component goes here -->
+</head>
+
+<body>
+    <style>
+        body{
+            background-color: #f2f2f2;
+            padding: 30px;
+        }
+    </style>
+
+    <!-- Header with the company name -->
+
+    <br>
+    <header>
+        <h1>Silver Grounds Brewing Co.</h1>
+    </header>
+    <br>
+    <br>
+
+    <div class="ui grid">
+        <div class="four wide column">
+            <div class="ui vertical fluid tabular menu">
+                <a class="item active" id="overviewTab" href="javascript:void(0);" onclick="showOverviewCharts()">
+                    Overview
+                </a>
+                <a class="item"  id="menuTab" href="javascript:void(0);" onclick="showMenuContent()">
+                    Menu
+                </a>
+                <a class="item">
+                    Employees
+                </a>
+                <a class="item">
+                    Inventory
+                </a>
+                <a class="item">
+                    Sales
+                </a>
+                <a class="item">
+                    Contact & Shipment Info
+                </a>
+            </div>
+        </div>
+        <div class="twelve wide stretched column">
+            <div class="ui segment">
+                <div id="overviewCharts">
+                    <div id="salesChart" style="width: 48%; float: left;"></div>
+                    <div id="inventoryChart" style="width: 48%; float: right;"></div>
+                    <div id="mostSoldItemsChart" style="width: 48%; float: right;"></div>
+                    <div id="salesByHourChart" style="width: 48%; margin: 0 auto;"></div>
+                </div>
+                <!-- Inside the "Menu" tab content -->
+                <div id="menuContent" style="display: none;">
+                    <iframe src="./pages/menu.html" width="100%" height="600" frameborder="0"></iframe>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
 </body>
+
 </html>

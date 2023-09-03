@@ -25,7 +25,7 @@ if ($conn->connect_error) {
 }
 
 // Query to retrieve menu items
-$sql = "SELECT id, sale_date, item_name, quantity, unit_price, total_price, payment_method FROM sales";
+$sql = "SELECT id, sale_date, item_name, quantity, unit_price, total_price, payment_method, sale_hour FROM sales";
 $result = $conn->query($sql);
 
 // Check if there are any results

@@ -123,7 +123,7 @@ $(document).ready(function () {
 
 
             //UPDATE
-            row.find(".edit-button").click( async function () {
+            row.find(".edit-button").click(function () {
                 console.log('clicked update');
 
                 // Toggle the readonly attribute of input fields
@@ -138,7 +138,7 @@ $(document).ready(function () {
             });
 
             //DELETE
-            row.find(".delete-button").click( async function () {
+            row.find(".delete-button").click(function () {
                 console.log('clicked delete');
                 // Send a DELETE request to delete_menu.php to delete the item from the database
                 $.ajax({
@@ -163,7 +163,7 @@ $(document).ready(function () {
             });
 
 
-            saveButton.unbind('click').click(async function () {
+            saveButton.unbind('click').click(function () {
                 console.log('clicked save');
                 // Extract updated data from input fields
                 const updatedData = {

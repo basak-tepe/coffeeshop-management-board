@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // Function to create a new empty row for adding a menu item
-     // Function to create a new empty row for adding a menu item
+    // Function to create a new empty row for adding a menu item
     function createEmptyRow() {
         const newRow = $('<tr></tr>');
         newRow.html(`
@@ -18,25 +18,20 @@ $(document).ready(function () {
     }
 
     // Function to fetch and render menu items
-    function fetchAndRenderMenuItems() {
+    async function fetchAndRenderMenuItems() {
         // Fetch data from the API endpoint
         $.get('http://localhost/coffeeshop_management/backend/src/menu/display_menu.php', function (data) {
             // Clear existing rows in the table
             const menuList = $('#menuList');
             menuList.find('tr:gt(0)').remove();
 
-
-            // Process and display the JSON data
-            const emptyrow = createEmptyRow();
-            menuList.prepend(emptyrow);
-
             $.each(data, function (index, item) {
                 const row = $('<tr></tr>');
                 row.html(`
                     <td>${item.id}</td>
-                    <td><input type="text" value="${item.name}" readonly></td>
-                    <td><input type="text" value="${item.description}" readonly></td>
-                    <td><input type="text" value="$${item.price}" readonly></td>
+                    <td><input type="text" value="${item.name}" readonly class="display-area"></td>
+                    <td><input type="text" value="${item.description}" readonly class="display-area"></td>
+                    <td><input type="text" value="$${item.price}" readonly  class="display-area"></td>
                     <td>
                         <button class="ui icon button edit-button blue">
                             <i class="pencil icon"></i>
@@ -50,15 +45,6 @@ $(document).ready(function () {
                     </td>
                 `);
                 menuList.append(row);
-
-                const editButton = row.find('.edit-button');
-                const saveButton = row.find('.save-button');
-                const deleteButton = row.find('.delete-button');
-                const inputFields = row.find('input[type="text"]');
-
-                // Handle the addition of new items (similar to your previous code)
-
-                // Rest of your code for editing and deleting existing items...
             });
         }).fail(function (error) {
             console.error('Error fetching data:', error);
@@ -77,9 +63,9 @@ $(document).ready(function () {
             const row = $('<tr></tr>');
             row.html(`
                 <td>${item.id}</td>
-                <td><input type="text" value="${item.name}" readonly></td>
-                <td><input type="text" value="${item.description}" readonly></td>
-                <td><input type="text" value="$${item.price}" readonly></td>
+                <td><input type="text" value="${item.name}" readonly class="display-area"></td>
+                <td><input type="text" value="${item.description}" readonly class="display-area"></td>
+                <td><input type="text" value="$${item.price}" readonly  class="display-area"></td>
                 <td>
                     <button class="ui icon button edit-button blue">
                         <i class="pencil icon"></i>
@@ -99,14 +85,17 @@ $(document).ready(function () {
             const deleteButton = row.find('.delete-button');
             const inputFields = row.find('input[type="text"]');
 
-            // Handle the addition of new items
-            emptyrow.find('.add-button').unbind('click').click(function () {
+            /// Handle the addition of new items
+            emptyrow.find('.add-button').unbind('click').click(async function () {
+                fetchAndRenderMenuItems();
                 const newItemData = {
                     name: emptyrow.find('input:eq(0)').val(),
                     description: emptyrow.find('input:eq(1)').val(),
                     price: emptyrow.find('input:eq(2)').val().replace('$', ''),
                 };
 
+                //clear the input fields
+                emptyrow.find('input').val('');
                 // Send a POST request to create_menu.php to add the new item
                 $.ajax({
                     url: 'http://localhost/coffeeshop_management/backend/src/menu/create_menu.php',
@@ -123,14 +112,6 @@ $(document).ready(function () {
 
                         // Toggle the readonly attribute of input fields
                         inputFields.prop('readonly', true);
-
-                        //clear the input fields
-                        inputFields.val('');
-
-                        // Toggle the display of edit, save, and delete buttons
-                        editButton.show();
-                        saveButton.hide();
-                        deleteButton.hide();
                     },
                     error: function () {
                         // Handle errors here if needed
@@ -140,8 +121,11 @@ $(document).ready(function () {
                 fetchAndRenderMenuItems();
             });
 
+
             //UPDATE
-            editButton.click(function () {
+            row.find(".edit-button").click( async function () {
+                console.log('clicked update');
+
                 // Toggle the readonly attribute of input fields
                 inputFields.prop('readonly', function (i, value) {
                     return !value;
@@ -154,19 +138,17 @@ $(document).ready(function () {
             });
 
             //DELETE
-            deleteButton.click(function () {
+            row.find(".delete-button").click( async function () {
+                console.log('clicked delete');
                 // Send a DELETE request to delete_menu.php to delete the item from the database
                 $.ajax({
                     url: 'http://localhost/coffeeshop_management/backend/src/menu/delete_menu.php',
                     type: 'DELETE',
                     contentType: 'application/json',
-                    data: JSON.stringify({ id: item.id }),
+                    data: JSON.stringify({ id: parseInt(item.id) }),
                     success: function () {
                         // Data successfully deleted
                         console.log('Data deleted successfully.');
-
-                        // Remove the row from the table
-                        row.remove();
                     },
                     error: function () {
                         // Handle errors here if needed
@@ -181,7 +163,8 @@ $(document).ready(function () {
             });
 
 
-            saveButton.click(function () {
+            saveButton.unbind('click').click(async function () {
+                console.log('clicked save');
                 // Extract updated data from input fields
                 const updatedData = {
                     id: item.id,
@@ -211,10 +194,10 @@ $(document).ready(function () {
                     },
                 });
 
-                    // Toggle the display of edit, save, and delete buttons
-                    editButton.show();
-                    saveButton.hide();
-                    deleteButton.hide();
+                // Toggle the display of edit, save, and delete buttons
+                editButton.show();
+                saveButton.hide();
+                deleteButton.hide();
             });
         });
     }).fail(function (error) {

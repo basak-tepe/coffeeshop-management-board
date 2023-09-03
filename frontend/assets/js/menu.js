@@ -3,16 +3,16 @@ fetch('http://localhost/coffeeshop_management/backend/src/menu/display_menu.php'
     .then(response => response.json())
     .then(data => {
         // Process and display the JSON data
-        const menuList = document.getElementById('menuList');
+        const menuTableBody = document.getElementById('menuList');
         data.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `
-                <strong>ID:</strong> ${item.id}<br>
-                <strong>Name:</strong> ${item.name}<br>
-                <strong>Description:</strong> ${item.description}<br>
-                <strong>Price:</strong> $${item.price}<br><br>
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.id}</td>
+                <td>${item.name}</td>
+                <td>${item.description}</td>
+                <td>$${item.price}</td>
             `;
-            menuList.appendChild(listItem);
+            menuTableBody.appendChild(row);
         });
     })
     .catch(error => {
